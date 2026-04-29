@@ -1,8 +1,23 @@
-# Chrome Extension Skill
+# Chrome Extension Agent Skill
 
-A Codex skill for building, testing, packaging, debugging, renaming, and preparing Chrome extensions for the Chrome Web Store.
+An agent skill for building, testing, packaging, debugging, renaming, and preparing Chrome extensions for the Chrome Web Store.
+
+This repository uses the `SKILL.md` format supported by agent tools such as Claude and Codex.
 
 ## Install
+
+### Claude
+
+Clone or copy this repository into Claude's personal skills directory using a folder name that matches the skill name:
+
+```bash
+mkdir -p ~/.claude/skills
+git clone <repo-url> ~/.claude/skills/chrome-extension
+```
+
+Claude discovers personal skills from `~/.claude/skills/`. The directory name should match the `name` field in `SKILL.md`, which is `chrome-extension`.
+
+### Codex
 
 Install this skill from the repository:
 
