@@ -20,6 +20,8 @@ description: Use when building, testing, packaging, debugging, renaming, or prep
 - After manually reloading an unpacked extension, check for an Errors button on the extension card. Distinguish current errors from stale ones; clear stale errors, reload again, and verify the button stays gone before calling the reload clean.
 - Use the user's main Chrome only for manual inspection or explicitly requested real-profile checks.
 - Use Chrome for Testing for automation and E2E tests. Do not run automated extension tests against the user's main Chrome profile.
+- Prefer the official Chrome for Testing installer: `npx @puppeteer/browsers install chrome@stable --path ~/.cache`. This creates a shared `~/.cache/chrome/...` install that can be reused across worktrees.
+- If a repo includes browser-discovery helpers, prefer lookup order like `BROWSER_BIN`, shared `~/.cache/chrome`, then repo-local fallback. Avoid making each worktree download its own browser unless isolation is intentional.
 - On macOS browser automation, prefer Chrome for Testing with `--use-mock-keychain`.
 - Do not assume stable Google Chrome will accept `--load-extension` for automation. If unpacked extension targets are missing, switch to Chrome for Testing rather than debugging the popup as if it loaded.
 
@@ -63,5 +65,6 @@ description: Use when building, testing, packaging, debugging, renaming, or prep
 
 - Search for old extension names after renames.
 - Check `manifest.json`, popup HTML titles/ARIA labels, README, privacy policy, package names, generated screenshot text, and package output names.
+- When changing Chrome for Testing install paths, clean up obsolete ignored browser directories only after confirming the new path works. Common stale paths include repo-local `chrome/` and older custom caches such as `~/.cache/chrome-for-testing`.
 - If the repository was renamed, update Git remote URLs and public docs/form URLs. Do not edit `.git/FETCH_HEAD` manually.
 - If local workspace folders are renamed, prefer starting new agent sessions from the new path or using a compatibility symlink for old chats.
