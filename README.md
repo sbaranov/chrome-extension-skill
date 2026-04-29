@@ -19,16 +19,20 @@ Claude discovers personal skills from `~/.claude/skills/`. The directory name sh
 
 ### Codex
 
-Install this skill from the repository:
+Clone or copy this repository into Codex's personal skills directory using a folder name that matches the skill name:
 
 ```bash
-codex skill install <repo-url>
+mkdir -p ~/.codex/skills
+git clone <repo-url> ~/.codex/skills/chrome-extension
 ```
 
-Or install from a local checkout:
+Codex discovers personal skills from `~/.codex/skills/`. The directory name should match the `name` field in `SKILL.md`, which is `chrome-extension`.
+
+To update an existing install:
 
 ```bash
-codex skill install /path/to/chrome-extension-skill
+cd ~/.codex/skills/chrome-extension
+git pull
 ```
 
 ## What It Helps With
