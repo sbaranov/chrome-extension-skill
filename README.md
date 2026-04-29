@@ -15,7 +15,12 @@ mkdir -p ~/.claude/skills
 git clone <repo-url> ~/.claude/skills/chrome-extension
 ```
 
-Claude discovers personal skills from `~/.claude/skills/`. The directory name should match the `name` field in `SKILL.md`, which is `chrome-extension`.
+If you already have a local clone and want Claude to use it directly, create a symlink instead:
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s /path/to/chrome-extension-skill ~/.claude/skills/chrome-extension
+```
 
 ### Codex
 
@@ -26,13 +31,11 @@ mkdir -p ~/.codex/skills
 git clone <repo-url> ~/.codex/skills/chrome-extension
 ```
 
-Codex discovers personal skills from `~/.codex/skills/`. The directory name should match the `name` field in `SKILL.md`, which is `chrome-extension`.
-
-To update an existing install:
+If you already have a local clone and want Codex to use it directly, create a symlink instead:
 
 ```bash
-cd ~/.codex/skills/chrome-extension
-git pull
+mkdir -p ~/.codex/skills
+ln -s /path/to/chrome-extension-skill ~/.codex/skills/chrome-extension
 ```
 
 ## What It Helps With
