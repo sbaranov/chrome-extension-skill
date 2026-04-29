@@ -17,15 +17,22 @@ description: Use when building, testing, packaging, debugging, renaming, or prep
 
 - When managing or reloading an extension in a user's main Chrome profile, follow repo-local instructions. If `AGENTS.md` says how to handle `chrome://extensions/`, obey it.
 - Avoid replacing the user's current Chrome tab. Prefer an existing relevant tab, or open a new tab when needed.
+- After manually reloading an unpacked extension, check for an Errors button on the extension card. Distinguish current errors from stale ones; clear stale errors, reload again, and verify the button stays gone before calling the reload clean.
 - Use the user's main Chrome only for manual inspection or explicitly requested real-profile checks.
 - Use Chrome for Testing for automation and E2E tests. Do not run automated extension tests against the user's main Chrome profile.
 - On macOS browser automation, prefer Chrome for Testing with `--use-mock-keychain`.
+- Do not assume stable Google Chrome will accept `--load-extension` for automation. If unpacked extension targets are missing, switch to Chrome for Testing rather than debugging the popup as if it loaded.
 
 ## Testing
 
 - Run the repo's documented test command, usually `npm test`, before claiming behavior is verified.
+- If browser tests use Chrome DevTools Protocol from Node, check whether the repo requires Node WebSocket support, such as `node --experimental-websocket`, and run the documented script instead of invoking the test file directly.
 - If browser automation fails because of sandboxed local port binding or browser launch restrictions, rerun with the required permission instead of rewriting the test approach.
+- Prefer a dynamically allocated remote-debugging port and an isolated temporary profile for automated runs to avoid collisions and user-profile state.
+- For extension ID discovery, prefer CDP targets first, especially the Manifest V3 service worker target, then fall back to generated profile metadata if the service worker is not visible yet.
+- Use polling for asynchronous Chrome API effects such as bookmark creates, moves, deletes, storage writes, tab operations, and service worker startup. Avoid fixed short sleeps as the only synchronization.
 - For popup/UI work, verify behavior with browser automation when practical, especially after drag/drop, sizing, context menu, popup navigation, or generated screenshot changes.
+- For drag/drop or other browser-native interactions that are unreliable when synthesized through CDP, prefer deterministic repo-provided test hooks when they exist.
 - For generated images, verify dimensions with a reliable local tool such as `sips` on macOS.
 
 ## Packaging
@@ -33,6 +40,8 @@ description: Use when building, testing, packaging, debugging, renaming, or prep
 - Chrome Web Store uploads should be `.zip` packages, not CRX files.
 - Generated zips usually belong outside Git. If the repo does not already define this, consider ignoring `dist/` or generated zip artifacts.
 - Before upload, verify the package contents. `manifest.json` must be at the archive root.
+- Prefer package scripts that enumerate expected files and fail on missing manifest, background, popup, content script, icon, or asset files before creating the zip.
+- Use deterministic zip options when the repo already does so, such as stripping extra file attributes, and avoid packaging broad directories unless the project intentionally ships everything inside them.
 - Regenerate the package after changes that affect source files, manifest, icons, popup assets, or store-facing metadata.
 
 ## Store Assets
