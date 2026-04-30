@@ -38,6 +38,22 @@ mkdir -p ~/.codex/skills
 ln -s /path/to/chrome-extension-skill ~/.codex/skills/chrome-extension
 ```
 
+### Cursor
+
+Clone or copy this repository into Cursor's global skills directory using a folder name that matches the skill name:
+
+```bash
+mkdir -p ~/.cursor/skills
+git clone <repo-url> ~/.cursor/skills/chrome-extension
+```
+
+If you already have a local clone and want Cursor to use it directly, create a symlink instead:
+
+```bash
+mkdir -p ~/.cursor/skills
+ln -s /path/to/chrome-extension-skill ~/.cursor/skills/chrome-extension
+```
+
 ## What It Helps With
 
 - Reading `manifest.json` as the source of truth for extension metadata, permissions, popup, background worker, and icons.
